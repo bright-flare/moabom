@@ -90,9 +90,9 @@ export default function DashboardClient({ initialJobs }: { initialJobs: JobItem[
   }
 
   return (
-    <main className={isDark ? "min-h-screen bg-[radial-gradient(circle_at_top,#1e293b,#020617)] text-slate-100" : "min-h-screen bg-[radial-gradient(circle_at_top,#fdf2f8,#eef2ff)] text-slate-800"}>
+    <main className={isDark ? "min-h-screen bg-[radial-gradient(circle_at_top,#312e81,#0f172a)] text-slate-100" : "min-h-screen bg-[radial-gradient(circle_at_top,#fff1f2,#eef2ff)] text-slate-800"}>
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 md:px-6">
-        <div className={isDark ? "rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-xl backdrop-blur" : "rounded-2xl border border-rose-100 bg-white/90 p-5 shadow-xl shadow-rose-100"}>
+        <div className={isDark ? "rounded-2xl border border-indigo-200/20 bg-indigo-200/10 p-5 shadow-xl shadow-indigo-900/30 backdrop-blur" : "rounded-2xl border border-rose-200 bg-white/95 p-5 shadow-xl shadow-rose-100"}>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-orange-300">MOABOM</p>
@@ -122,7 +122,7 @@ export default function DashboardClient({ initialJobs }: { initialJobs: JobItem[
           <Card label="고용24" value={summary.work24} isDark={isDark} />
         </section>
 
-        <section className={isDark ? "flex flex-wrap gap-2 rounded-2xl border border-white/10 bg-white/[0.04] p-4" : "flex flex-wrap gap-2 rounded-2xl border border-indigo-100 bg-white/90 p-4"}>
+        <section className={isDark ? "flex flex-wrap gap-2 rounded-2xl border border-indigo-200/20 bg-indigo-200/10 p-4" : "flex flex-wrap gap-2 rounded-2xl border border-indigo-200 bg-white/95 p-4"}>
           <Select label="플랫폼" value={source} onChange={(v) => setSource(v as "all" | Source)} options={["all", "saramin", "jobkorea", "work24"]} isDark={isDark} />
           <Select label="기간" value={dateFilter} onChange={(v) => setDateFilter(v as DateFilter)} options={["today", "3days"]} isDark={isDark} />
         </section>
@@ -190,9 +190,9 @@ export default function DashboardClient({ initialJobs }: { initialJobs: JobItem[
 
 function Card({ label, value, isDark }: { label: string; value: number; isDark: boolean }) {
   return (
-    <div className={isDark ? "rounded-xl border border-white/10 bg-white/[0.04] p-3" : "rounded-xl border border-slate-200 bg-white p-3"}>
-      <div className={isDark ? "text-xs text-slate-400" : "text-xs text-slate-500"}>{label}</div>
-      <div className={isDark ? "text-xl font-bold text-white" : "text-xl font-bold text-slate-900"}>{value}</div>
+    <div className={isDark ? "rounded-xl border border-indigo-200/20 bg-indigo-200/10 p-3" : "rounded-xl border border-violet-200 bg-gradient-to-br from-violet-50 to-rose-50 p-3"}>
+      <div className={isDark ? "text-xs text-indigo-100/70" : "text-xs text-violet-600"}>{label}</div>
+      <div className={isDark ? "text-xl font-bold text-white" : "text-xl font-bold text-violet-900"}>{value}</div>
     </div>
   );
 }
@@ -219,17 +219,17 @@ function Select({ label, value, onChange, options, isDark }: { label: string; va
 function getSourceTone(source: Source, isDark: boolean) {
   if (source === "saramin") {
     return isDark
-      ? { card: "border border-sky-400/30 bg-sky-950/30", badge: "bg-sky-400/20 text-sky-200" }
-      : { card: "border border-sky-200 bg-sky-50/80", badge: "bg-sky-100 text-sky-700" };
+      ? { card: "border border-sky-300/35 bg-sky-400/10", badge: "bg-sky-300/20 text-sky-100" }
+      : { card: "border border-sky-200 bg-gradient-to-br from-sky-50 to-cyan-50", badge: "bg-sky-100 text-sky-700" };
   }
   if (source === "jobkorea") {
     return isDark
-      ? { card: "border border-violet-400/30 bg-violet-950/25", badge: "bg-violet-400/20 text-violet-200" }
-      : { card: "border border-violet-200 bg-violet-50/80", badge: "bg-violet-100 text-violet-700" };
+      ? { card: "border border-fuchsia-300/35 bg-fuchsia-400/10", badge: "bg-fuchsia-300/20 text-fuchsia-100" }
+      : { card: "border border-fuchsia-200 bg-gradient-to-br from-fuchsia-50 to-rose-50", badge: "bg-fuchsia-100 text-fuchsia-700" };
   }
   return isDark
-    ? { card: "border border-emerald-400/30 bg-emerald-950/25", badge: "bg-emerald-400/20 text-emerald-200" }
-    : { card: "border border-emerald-200 bg-emerald-50/80", badge: "bg-emerald-100 text-emerald-700" };
+    ? { card: "border border-emerald-300/35 bg-emerald-400/10", badge: "bg-emerald-300/20 text-emerald-100" }
+    : { card: "border border-emerald-200 bg-gradient-to-br from-emerald-50 to-lime-50", badge: "bg-emerald-100 text-emerald-700" };
 }
 
 function IconButton({ label, icon, onClick, isDark }: { label: string; icon: ReactNode; onClick: () => void; isDark: boolean }) {
