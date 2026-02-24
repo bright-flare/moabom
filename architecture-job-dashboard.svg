@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+  <defs>
+    <style>
+      .title { font: 700 34px 'Arial'; fill: #111827; }
+      .label { font: 600 20px 'Arial'; fill: #111827; }
+      .text { font: 500 16px 'Arial'; fill: #374151; }
+      .small { font: 500 14px 'Arial'; fill: #4b5563; }
+      .box { fill: #ffffff; stroke: #d1d5db; stroke-width: 2; rx: 14; }
+      .boxBlue { fill: #eff6ff; stroke: #93c5fd; stroke-width: 2; rx: 14; }
+      .boxOrange { fill: #fff7ed; stroke: #fdba74; stroke-width: 2; rx: 14; }
+      .boxGreen { fill: #ecfdf5; stroke: #86efac; stroke-width: 2; rx: 14; }
+      .arrow { stroke: #6b7280; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+      .dashed { stroke-dasharray: 8 8; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280" />
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="820" fill="#f8fafc"/>
+  <text x="60" y="60" class="title">구직 대시보드 아키텍처 (현재 구현)</text>
+
+  <!-- Collectors -->
+  <rect class="boxOrange" x="60" y="120" width="320" height="220"/>
+  <text x="85" y="160" class="label">1) Daily Collector (11:00 KST)</text>
+  <text x="85" y="195" class="text">- OpenClaw Cron: job-digest:telegram-11am</text>
+  <text x="85" y="225" class="text">- Sources: 사람인 / 잡코리아 / 고용24</text>
+  <text x="85" y="255" class="text">- Script: digest.py</text>
+  <text x="85" y="285" class="small">(텔레그램 요약도 함께 전송)</text>
+
+  <!-- Exporter -->
+  <rect class="boxOrange" x="440" y="120" width="360" height="220"/>
+  <text x="465" y="160" class="label">2) Exporter</text>
+  <text x="465" y="195" class="text">- Script: export_to_dashboard.py</text>
+  <text x="465" y="225" class="text">- 정규화 + 중복 제거(id 기준)</text>
+  <text x="465" y="255" class="text">- Output: jobs.json</text>
+  <text x="465" y="285" class="small">/workspace/moabom/data/jobs.json</text>
+
+  <!-- Storage -->
+  <rect class="boxGreen" x="860" y="120" width="460" height="220"/>
+  <text x="885" y="160" class="label">3) Data Store (File-based)</text>
+  <text x="885" y="195" class="text">jobs.json</text>
+  <text x="885" y="225" class="text">- id, source, title, url, collectedAt, status, note</text>
+  <text x="885" y="255" class="text">- 초기 MVP 저장소 (향후 Supabase 전환 가능)</text>
+
+  <!-- Next.js -->
+  <rect class="boxBlue" x="60" y="420" width="1260" height="320"/>
+  <text x="85" y="460" class="label">4) Next.js App (MOABOM)</text>
+
+  <rect class="box" x="90" y="490" width="350" height="210"/>
+  <text x="110" y="525" class="label">Server Render</text>
+  <text x="110" y="555" class="text">page.tsx</text>
+  <text x="110" y="585" class="text">- getJobs()로 초기 데이터 로드</text>
+  <text x="110" y="615" class="text">- initialJobs를 Client로 전달</text>
+
+  <rect class="box" x="485" y="490" width="390" height="210"/>
+  <text x="505" y="525" class="label">Client UI</text>
+  <text x="505" y="555" class="text">dashboard-client.tsx</text>
+  <text x="505" y="585" class="text">- 필터(플랫폼/기간/상태)</text>
+  <text x="505" y="615" class="text">- 북마크/제외/메모</text>
+
+  <rect class="box" x="920" y="490" width="370" height="210"/>
+  <text x="940" y="525" class="label">API Routes</text>
+  <text x="940" y="555" class="text">GET /api/jobs</text>
+  <text x="940" y="585" class="text">PATCH /api/jobs/:id</text>
+  <text x="940" y="615" class="text">- 상태/메모 저장</text>
+
+  <!-- Arrows -->
+  <path class="arrow" d="M380 230 L440 230"/>
+  <path class="arrow" d="M800 230 L860 230"/>
+  <path class="arrow dashed" d="M1090 340 L1090 420"/>
+  <path class="arrow" d="M1090 490 L1090 470"/>
+  <path class="arrow" d="M920 595 L875 595"/>
+  <path class="arrow" d="M485 595 L440 595"/>
+
+  <text x="1010" y="392" class="small">초기 로드</text>
+  <text x="800" y="90" class="small">Data Pipeline</text>
+</svg>
