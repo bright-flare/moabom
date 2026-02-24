@@ -14,7 +14,17 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "MOABOM",
-  description: "MOABOM dashboard",
+  description: "필요한 정보를 모아, 한눈에.",
+  openGraph: {
+    title: "MOABOM",
+    description: "필요한 정보를 모아, 한눈에.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MOABOM",
+    description: "필요한 정보를 모아, 한눈에.",
+  },
 };
 
 export default function RootLayout({
