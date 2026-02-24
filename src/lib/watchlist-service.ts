@@ -69,7 +69,7 @@ async function buildLivingCostCard(): Promise<WatchlistCard> {
 
   return {
     id: "living-cost",
-    title: "생활물가",
+    title: "생활물가 모아봄",
     subtitle: "공공 농수산물 가격 동향",
     summary: `상승 ${topUp?.name ?? "-"} +${topUp?.changeKrw ?? 0}원 / 하락 ${topDown?.name ?? "-"} ${topDown?.changeKrw ?? 0}원`,
     updatedAt: snap.updatedAt || nowIso(),
