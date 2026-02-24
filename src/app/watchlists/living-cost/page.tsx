@@ -45,7 +45,7 @@ export default function LivingCostPage() {
               onClick={() => setTheme(isDark ? "light" : "dark")}
               aria-label="테마 전환"
               title="테마 전환"
-              className={isDark ? "rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-base hover:bg-white/20" : "rounded-lg border border-slate-200 bg-white px-3 py-2 text-base text-slate-700 shadow-sm hover:bg-slate-50"}
+              className={isDark ? "rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-base hover:bg-white/20" : "rounded-lg border border-violet-200 bg-violet-50 px-3 py-2 text-base text-violet-700 shadow-sm hover:bg-violet-100"}
             >
               {isDark ? "☀️" : "🌙"}
             </button>

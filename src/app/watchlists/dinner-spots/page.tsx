@@ -53,8 +53,8 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-teal-50 via-cyan-50 to-sky-50 p-6">
       <div className="mx-auto max-w-4xl space-y-4">
-        <div className="rounded-2xl border border-teal-200 bg-white p-5">
-          <div className="flex items-center justify-between gap-2">
+        <div className="rounded-2xl border border-teal-200 bg-white/95 p-5 shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
               <h1 className="text-2xl font-bold">회식장소 모아봄</h1>
               <p className="mt-1 text-sm text-slate-600">{pos ? "현재 위치 기반 추천" : "위치 권한 허용 시 근거리 추천"}</p>
@@ -62,14 +62,14 @@ export default function Page() {
             </div>
             <button
               onClick={refreshLocation}
-              className="rounded-lg border border-teal-200 bg-teal-100 px-3 py-2 text-sm font-semibold text-teal-700 hover:bg-teal-200"
+              className="rounded-lg border border-teal-200 bg-teal-50 px-3 py-2 text-sm font-semibold text-teal-700 shadow-sm hover:bg-teal-100"
             >
               {loading ? "새로고침 중..." : "새로고침"}
             </button>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-cyan-200 bg-white p-4">
+        <div className="rounded-2xl border border-cyan-200 bg-white/95 p-4 shadow-sm">
           <p className="text-sm font-semibold text-cyan-700">네이버 지도 기반 보기</p>
           <p className="mt-1 text-xs text-slate-500">아래 각 카드의 네이버지도 버튼으로 해당 장소를 지도에서 바로 열 수 있어.</p>
         </div>
@@ -102,7 +102,7 @@ export default function Page() {
             </li>
           ))}
         </ul>
-        <Link href="/" className="inline-block rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm">메인으로</Link>
+        <Link href="/" className="inline-block rounded-lg border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm hover:bg-white">메인으로</Link>
       </div>
     </main>
   );

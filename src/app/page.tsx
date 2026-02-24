@@ -16,6 +16,9 @@ const DEFAULT_ORDER = [
   "countdown",
   "lunch",
   "dinner-spots",
+  "costco-sales",
+  "traders-sales",
+  "nasa-apod",
 ];
 
 const FORTUNES = [
@@ -78,6 +81,9 @@ export default function Home() {
   const [dragOverId, setDragOverId] = useState<string | null>(null);
   const [now, setNow] = useState(() => new Date());
   const [userPos, setUserPos] = useState<{ lat: number; lon: number } | null>(null);
+  const [costcoCount, setCostcoCount] = useState<number>(0);
+  const [tradersCount, setTradersCount] = useState<number>(0);
+  const [nasaPreview, setNasaPreview] = useState<{ title: string; image: string; date: string } | null>(null);
 
   useEffect(() => {
     window.localStorage.setItem("moabom-theme", theme);
@@ -100,6 +106,61 @@ export default function Home() {
       () => {},
       { enableHighAccuracy: false, timeout: 4000 }
     );
+  }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    async function loadNasa() {
+      try {
+        const res = await fetch('/api/watchlists/nasa-apod', { cache: 'no-store' });
+        if (!res.ok) return;
+        const json = await res.json();
+        const image = json?.media_type === 'image' ? json?.url : json?.thumbnail_url;
+        if (mounted && image) setNasaPreview({ title: json?.title || 'NASA APOD', image, date: json?.date || '' });
+      } catch {}
+    }
+    loadNasa();
+    const id = setInterval(loadNasa, 24 * 60 * 60 * 1000);
+    return () => {
+      mounted = false;
+      clearInterval(id);
+    };
+  }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    async function loadTraders() {
+      try {
+        const res = await fetch('/api/watchlists/traders-sales', { cache: 'no-store' });
+        if (!res.ok) return;
+        const json = await res.json();
+        if (mounted) setTradersCount(Number(json?.total || 0));
+      } catch {}
+    }
+    loadTraders();
+    const id = setInterval(loadTraders, 60 * 60 * 1000);
+    return () => {
+      mounted = false;
+      clearInterval(id);
+    };
+  }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    async function loadCostco() {
+      try {
+        const res = await fetch('/api/watchlists/costco-sales', { cache: 'no-store' });
+        if (!res.ok) return;
+        const json = await res.json();
+        if (mounted) setCostcoCount(Number(json?.total || 0));
+      } catch {}
+    }
+    loadCostco();
+    const id = setInterval(loadCostco, 60 * 60 * 1000);
+    return () => {
+      mounted = false;
+      clearInterval(id);
+    };
   }, []);
 
   useEffect(() => {
@@ -190,8 +251,35 @@ export default function Home() {
         trend: "up",
         badge: "Nearby",
       },
+      {
+        id: "costco-sales",
+        title: "코스트코 세일 모아봄",
+        subtitle: "Special Price / Online Deals",
+        summary: costcoCount > 0 ? `오늘 수집 ${costcoCount}건` : "세일 품목 수집 중",
+        updatedAt: now.toISOString(),
+        trend: "up",
+        badge: "Daily",
+      },
+      {
+        id: "traders-sales",
+        title: "트레이더스 세일 모아봄",
+        subtitle: "이벤트/기획전/딜",
+        summary: tradersCount > 0 ? `오늘 수집 ${tradersCount}건` : "세일 품목 수집 중",
+        updatedAt: now.toISOString(),
+        trend: "up",
+        badge: "Daily",
+      },
+      {
+        id: "nasa-apod",
+        title: "NASA 우주사진 모아봄",
+        subtitle: "Astronomy Picture of the Day",
+        summary: nasaPreview?.title || "오늘의 우주사진 불러오는 중",
+        updatedAt: now.toISOString(),
+        trend: "up",
+        badge: "Daily",
+      },
     ];
-  }, [now, userPos]);
+  }, [now, userPos, costcoCount, tradersCount, nasaPreview]);
 
   const allWatchlists = useMemo(() => [...watchlists, ...funCards, ...customWatchlists], [watchlists, funCards, customWatchlists]);
   const watchMap = useMemo(() => Object.fromEntries(allWatchlists.map((w) => [w.id, w])), [allWatchlists]);
@@ -241,6 +329,9 @@ export default function Home() {
     if (id === "countdown") return "⏳";
     if (id === "lunch") return "🍱";
     if (id === "dinner-spots") return "🍻";
+    if (id === "costco-sales") return "🛍️";
+    if (id === "traders-sales") return "🏬";
+    if (id === "nasa-apod") return "🪐";
     return "✨";
   }
 
@@ -308,6 +399,18 @@ export default function Home() {
                     ? isDark
                       ? "border-teal-200/30 bg-gradient-to-r from-teal-400/20 to-cyan-400/10 shadow-xl shadow-teal-900/20"
                       : "border-teal-200 bg-gradient-to-r from-teal-100 via-cyan-50 to-sky-100 shadow-xl shadow-teal-100"
+                    : w.id === "costco-sales"
+                    ? isDark
+                      ? "border-rose-200/30 bg-gradient-to-r from-rose-400/20 to-orange-400/10 shadow-xl shadow-rose-900/20"
+                      : "border-rose-200 bg-gradient-to-r from-rose-100 via-orange-50 to-amber-100 shadow-xl shadow-rose-100"
+                    : w.id === "traders-sales"
+                    ? isDark
+                      ? "border-amber-200/30 bg-gradient-to-r from-amber-400/20 to-yellow-400/10 shadow-xl shadow-amber-900/20"
+                      : "border-amber-200 bg-gradient-to-r from-amber-100 via-yellow-50 to-orange-100 shadow-xl shadow-amber-100"
+                    : w.id === "nasa-apod"
+                    ? isDark
+                      ? "border-indigo-200/30 bg-gradient-to-r from-indigo-400/20 to-sky-400/10 shadow-xl shadow-indigo-900/20"
+                      : "border-indigo-200 bg-gradient-to-r from-indigo-100 via-sky-50 to-violet-100 shadow-xl shadow-indigo-100"
                     : isDark
                     ? "border-white/20 bg-white/[0.08] shadow-xl"
                     : "border-slate-200 bg-white shadow-xl"
@@ -350,6 +453,22 @@ export default function Home() {
                     <p className={isDark ? "mt-2 text-sm text-slate-100 animate-wiggle-cute" : "mt-2 text-sm text-slate-700 animate-wiggle-cute"}>퇴근까지 남은 시간</p>
                     <p className={isDark ? "mt-2 text-[11px] text-slate-300" : "mt-2 text-[11px] text-slate-500"}>업데이트: {new Date(w.updatedAt).toLocaleTimeString()}</p>
                   </article>
+                ) : w.id === "nasa-apod" ? (
+                  <article className={`h-full overflow-hidden rounded-2xl border p-4 ${watchTone}`}>
+                    <div className="flex items-center justify-between">
+                      <p className={isDark ? "text-sm text-orange-200" : "text-sm text-rose-600"}>카테고리</p>
+                      <span className={isDark ? "rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-slate-300" : "rounded-full bg-white/80 px-2 py-0.5 text-[10px] text-slate-600"}>{w.badge}</span>
+                    </div>
+                    <h2 className={isDark ? "mt-1 text-xl font-bold text-slate-100" : "mt-1 text-xl font-bold text-slate-800"}>{emojiForCard(w.id)} {w.title}</h2>
+                    <p className={isDark ? "mt-1 text-xs text-slate-300" : "mt-1 text-xs text-slate-500"}>{w.subtitle}</p>
+                    {nasaPreview?.image && (
+                      <div className="relative mt-2 h-28 w-full overflow-hidden rounded-xl">
+                        <Image src={nasaPreview.image} alt={nasaPreview.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 30vw" />
+                      </div>
+                    )}
+                    <p className={isDark ? "mt-2 text-sm text-slate-100" : "mt-2 text-sm text-slate-700"}>{w.summary}</p>
+                    <p className={isDark ? "mt-2 text-[11px] text-slate-300" : "mt-2 text-[11px] text-slate-500"}>업데이트: {new Date(w.updatedAt).toLocaleTimeString()}</p>
+                  </article>
                 ) : (
                   <article className={`h-full rounded-2xl border p-4 ${watchTone}`}>
                     <div className="flex items-center justify-between">
@@ -373,6 +492,12 @@ export default function Home() {
                   <Link href="/watchlists/lunch" className="block transition hover:scale-[1.01]">{cardBody}</Link>
                 ) : w.id === "dinner-spots" ? (
                   <Link href="/watchlists/dinner-spots" className="block transition hover:scale-[1.01]">{cardBody}</Link>
+                ) : w.id === "costco-sales" ? (
+                  <Link href="/watchlists/costco-sales" className="block transition hover:scale-[1.01]">{cardBody}</Link>
+                ) : w.id === "traders-sales" ? (
+                  <Link href="/watchlists/traders-sales" className="block transition hover:scale-[1.01]">{cardBody}</Link>
+                ) : w.id === "nasa-apod" ? (
+                  <Link href="/watchlists/nasa-apod" className="block transition hover:scale-[1.01]">{cardBody}</Link>
                 ) : w.id === "meme" ? (
                   <a href={memeOfDay.url} target="_blank" rel="noreferrer" className="block transition hover:scale-[1.01]">{cardBody}</a>
                 ) : (

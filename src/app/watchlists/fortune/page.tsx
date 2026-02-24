@@ -16,12 +16,12 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-rose-50 p-6">
       <div className="mx-auto max-w-3xl space-y-4">
-        <div className="rounded-2xl border border-amber-200 bg-white p-5">
+        <div className="rounded-2xl border border-amber-200 bg-white/95 p-5 shadow-sm">
           <h1 className="text-2xl font-bold">오늘의 운세 모아봄</h1>
           <p className="mt-2 text-slate-600">{LINES[idx]}</p>
           <p className="mt-2 text-sm text-slate-500">오늘의 키워드: 집중 · 연결 · 작은 실행</p>
         </div>
-        <Link href="/" className="inline-block rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm">메인으로</Link>
+        <Link href="/" className="inline-block rounded-lg border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm hover:bg-white">메인으로</Link>
       </div>
     </main>
   );

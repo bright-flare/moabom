@@ -35,12 +35,12 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-orange-50 via-amber-50 to-yellow-50 p-6">
       <div className="mx-auto max-w-3xl space-y-4">
-        <div className="rounded-2xl border border-orange-200 bg-white p-5">
-          <div className="flex items-center justify-between gap-2">
+        <div className="rounded-2xl border border-orange-200 bg-white/95 p-5 shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <h1 className="text-2xl font-bold">점심 추천 모아봄</h1>
             <button
               onClick={() => setSeed(Date.now())}
-              className="rounded-lg border border-orange-200 bg-orange-100 px-3 py-2 text-sm font-semibold text-orange-700 hover:bg-orange-200"
+              className="rounded-lg border border-orange-200 bg-orange-50 px-3 py-2 text-sm font-semibold text-orange-700 shadow-sm hover:bg-orange-100"
             >
               새로고침
             </button>
@@ -58,7 +58,7 @@ export default function Page() {
           ))}
         </ul>
 
-        <Link href="/" className="inline-block rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm">메인으로</Link>
+        <Link href="/" className="inline-block rounded-lg border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm hover:bg-white">메인으로</Link>
       </div>
     </main>
   );
