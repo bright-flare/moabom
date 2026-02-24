@@ -1,4 +1,4 @@
-export type WatchlistId = "living-cost" | "fx" | "traffic";
+export type WatchlistId = "living-cost" | "fx" | "traffic" | string;
 
 export interface WatchlistCard {
   id: WatchlistId;
