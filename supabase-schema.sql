@@ -15,7 +15,8 @@ alter table public.jobs enable row level security;
 
 -- For private dashboard with service-role backend calls, you can keep strict policies.
 -- Allow anon read only if you later move to browser-side querying.
-create policy if not exists "allow read via anon"
+drop policy if exists "allow read via anon" on public.jobs;
+create policy "allow read via anon"
 on public.jobs
 for select
 to anon
