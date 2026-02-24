@@ -46,7 +46,7 @@ export default function Home() {
                 <h2 className="mt-1 text-2xl font-bold">일자리 모아봄</h2>
                 <p className={isDark ? "mt-2 text-sm text-slate-200" : "mt-2 text-sm text-slate-600"}>오늘 수집된 채용 정보를 필터링하고 공유 중심으로 빠르게 확인해요.</p>
               </div>
-              <span className={isDark ? "rounded-xl bg-white/15 px-3 py-2 text-sm group-hover:bg-white/25" : "rounded-xl bg-white/80 px-3 py-2 text-sm text-slate-700 group-hover:bg-white"}>상세 보기 →</span>
+              <span className={isDark ? "rounded-xl bg-white/15 px-2 py-1.5 text-xs sm:px-3 sm:py-2 sm:text-sm whitespace-nowrap group-hover:bg-white/25" : "rounded-xl bg-white/80 px-2 py-1.5 text-xs sm:px-3 sm:py-2 sm:text-sm text-slate-700 whitespace-nowrap group-hover:bg-white"}>상세 보기 →</span>
             </div>
           </Link>
         </div>

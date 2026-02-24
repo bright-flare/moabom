@@ -149,7 +149,7 @@ export default function DashboardClient({ initialJobs }: { initialJobs: JobItem[
 
                 <div className="pt-1">
                   <button
-                    className={isDark ? "w-full rounded-md border border-fuchsia-300/40 bg-fuchsia-400/15 px-2.5 py-1.5 text-[11px] font-medium text-fuchsia-200 hover:bg-fuchsia-400/25 md:w-auto" : "w-full rounded-md border border-fuchsia-200 bg-fuchsia-100 px-2.5 py-1.5 text-[11px] font-semibold text-fuchsia-700 hover:bg-fuchsia-200 md:w-auto"}
+                    className={isDark ? "rounded-md border border-fuchsia-300/40 bg-fuchsia-400/15 px-2.5 py-1.5 text-[11px] font-medium text-fuchsia-200 hover:bg-fuchsia-400/25" : "rounded-md border border-fuchsia-200 bg-fuchsia-100 px-2.5 py-1.5 text-[11px] font-semibold text-fuchsia-700 hover:bg-fuchsia-200"}
                     onClick={() => setOpenShareId((prev) => (prev === job.id ? null : job.id))}
                   >
                     공유하기
