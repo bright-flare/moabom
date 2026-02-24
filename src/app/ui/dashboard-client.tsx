@@ -93,13 +93,13 @@ export default function DashboardClient({ initialJobs }: { initialJobs: JobItem[
     <main className={isDark ? "min-h-screen bg-[radial-gradient(circle_at_top,#1e293b,#020617)] text-slate-100" : "min-h-screen bg-[radial-gradient(circle_at_top,#fdf2f8,#eef2ff)] text-slate-800"}>
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 md:px-6">
         <div className={isDark ? "rounded-2xl border border-white/10 bg-white/[0.04] p-5 shadow-xl backdrop-blur" : "rounded-2xl border border-rose-100 bg-white/90 p-5 shadow-xl shadow-rose-100"}>
-          <div className="flex items-center justify-between gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-orange-300">MOABOM</p>
               <h1 className="mt-1 text-2xl font-bold md:text-3xl">일자리 모아봄</h1>
               <p className="mt-1 text-sm text-slate-400">채용 정보를 빠르게 확인하고 SNS로 공유해요.</p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 self-end sm:self-auto">
               <button
                 onClick={() => setTheme(isDark ? "light" : "dark")}
                 aria-label="테마 전환"
@@ -115,7 +115,7 @@ export default function DashboardClient({ initialJobs }: { initialJobs: JobItem[
           </div>
         </div>
 
-        <section className="grid grid-cols-2 gap-3 md:grid-cols-4">
+        <section className="grid grid-cols-2 gap-2 sm:gap-3 md:grid-cols-4">
           <Card label="총 공고" value={summary.total} isDark={isDark} />
           <Card label="사람인" value={summary.saramin} isDark={isDark} />
           <Card label="잡코리아" value={summary.jobkorea} isDark={isDark} />
@@ -149,7 +149,7 @@ export default function DashboardClient({ initialJobs }: { initialJobs: JobItem[
 
                 <div className="pt-1">
                   <button
-                    className={isDark ? "rounded-md border border-fuchsia-300/40 bg-fuchsia-400/15 px-2.5 py-1.5 text-[11px] font-medium text-fuchsia-200 hover:bg-fuchsia-400/25" : "rounded-md border border-fuchsia-200 bg-fuchsia-100 px-2.5 py-1.5 text-[11px] font-semibold text-fuchsia-700 hover:bg-fuchsia-200"}
+                    className={isDark ? "w-full rounded-md border border-fuchsia-300/40 bg-fuchsia-400/15 px-2.5 py-1.5 text-[11px] font-medium text-fuchsia-200 hover:bg-fuchsia-400/25 md:w-auto" : "w-full rounded-md border border-fuchsia-200 bg-fuchsia-100 px-2.5 py-1.5 text-[11px] font-semibold text-fuchsia-700 hover:bg-fuchsia-200 md:w-auto"}
                     onClick={() => setOpenShareId((prev) => (prev === job.id ? null : job.id))}
                   >
                     공유하기
@@ -157,7 +157,7 @@ export default function DashboardClient({ initialJobs }: { initialJobs: JobItem[
                 </div>
 
                 {openShareId === job.id && (
-                  <div className={isDark ? "absolute left-3 right-3 top-24 z-20 rounded-xl border border-white/15 bg-slate-900/95 p-2 shadow-2xl backdrop-blur" : "absolute left-3 right-3 top-24 z-20 rounded-xl border border-slate-200 bg-white p-2 shadow-2xl"}>
+                  <div className={isDark ? "mt-2 rounded-xl border border-white/15 bg-slate-900/95 p-2 shadow-2xl backdrop-blur md:absolute md:left-3 md:right-3 md:top-24 md:z-20" : "mt-2 rounded-xl border border-slate-200 bg-white p-2 shadow-2xl md:absolute md:left-3 md:right-3 md:top-24 md:z-20"}>
                     <div className="grid grid-cols-3 gap-2 pb-2">
                       <IconButton label="텔레그램" icon={<TelegramIcon />} onClick={() => shareTelegram(job)} isDark={isDark} />
                       <IconButton label="인스타" icon={<InstagramIcon />} onClick={() => shareInstagram(job)} isDark={isDark} />
